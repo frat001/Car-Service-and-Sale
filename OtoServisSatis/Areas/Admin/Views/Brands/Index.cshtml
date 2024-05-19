@@ -1,0 +1,39 @@
+﻿@model IEnumerable<OtoServisSatis.Entities.Marka>
+
+@{
+    ViewData["Title"] = "Markalar";
+}
+
+<h1>Markalar</h1>
+
+<p>
+    <a class="btn btn-outline-primary" style="width: 150px; " asp-action="Create">Yeni Ekle</a>
+</p>
+<table class="table table-striped" style="width:1000px; ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody >
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adi)
+                </td>
+
+
+                <td  >
+                    <a class="btn btn-primary float-end ms-4" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                    
+                    <a class="btn btn-danger float-end" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
