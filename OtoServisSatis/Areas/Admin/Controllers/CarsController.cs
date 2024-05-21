@@ -19,27 +19,27 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             _serviceMarka = serviceMarka;
         }
 
-        // GET: CarsController
+        // GET
         public async Task<IActionResult> IndexAsync()
         {
             var model = await _service.GetAllAsync();
             return View(model);
         }
 
-        // GET: CarsController/Details/5
+        // GET
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: CarsController/Create
+        // GET
         public async Task<ActionResult> CreateAsync()
         {
             ViewBag.MarkaId = new SelectList(await _serviceMarka.GetAllAsync(),"Id", "Adi");
             return View();
         }
 
-        // POST: CarsController/Create
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(Arac arac)
@@ -61,7 +61,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(arac);
         }
 
-        // GET: CarsController/Edit/5
+        // GET
         public async Task<ActionResult> EditAsync(int id)
         {
             ViewBag.MarkaId = new SelectList(await _serviceMarka.GetAllAsync(), "Id", "Adi");
@@ -70,7 +70,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(model);
         }
 
-        // POST: CarsController/Edit/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, Arac arac)
@@ -92,14 +92,14 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(arac);
         }
 
-        // GET: CarsController/Delete/5
+        // GET
         public async Task<ActionResult> DeleteAsync(int id)
         {
             var model = await _service.FindAsync(id);
             return View();
         }
 
-        // POST: CarsController/Delete/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteAsync(int id, Arac arac)

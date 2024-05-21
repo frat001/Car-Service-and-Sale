@@ -21,20 +21,20 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             _serviceMusteri = serviceMusteri;
         }
 
-        // GET: SalesController
+        // GET
         public async Task<IActionResult> IndexAsync()
         {
             var model = await _service.GetAllAsync();
             return View(model);
         }
 
-        // GET: SalesController/Details/5
+        // GET
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: SalesController/Create
+        // GET
         public async Task<ActionResult> CreateAsync()
         {
             ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(),"Id","Modeli");
@@ -43,7 +43,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: SalesController/Create
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(Satis satis)
@@ -66,7 +66,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(satis);
         }
 
-        // GET: SalesController/Edit/5
+        // GET
         public async Task<ActionResult> EditAsync(int id)
         {
             ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(), "Id", "Modeli");
@@ -75,7 +75,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(model);
         }
 
-        // POST: SalesController/Edit/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, Satis satis)
@@ -98,14 +98,14 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(satis);
         }
 
-        // GET: SalesController/Delete/5
+        // GET
         public async Task<ActionResult> DeleteAsync(int id)
         {
             var model = await _service.FindAsync(id);
             return View(model);
         }
 
-        // POST: SalesController/Delete/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Satis satis)

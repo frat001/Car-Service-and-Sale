@@ -27,25 +27,25 @@ namespace OtoServisSatis.Areas.Admin.Controllers
         {
             try
             {
-                //var account = _service.Get(k => k.Email == email && k.Sifre == password && k.AktifMi == true);
-                //if (account == null)
-                //{
-                //    TempData["Mesaj"] = "Geçersiz Kullanıcı";
-                //}
-                //else
-                //{
-                //    //kullanıcıya verilen haklar Claims
-                //    var claims = new List<Claim>()
-                //    {
-                //        new Claim(ClaimTypes.Name, account.Adi),
-                //        new Claim("Role", "Admin")
-                //    };
-                //    var userIdentity = new ClaimsIdentity(claims, "Login");
-                //    //  hak prensipi yetkileri
-                //    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-                //    await HttpContext.SignInAsync(principal);
-                //    return Redirect("/Admin");
-                //}
+                var account = _service.Get(k => k.Email == email && k.Sifre == password && k.AktifMi == true);
+                if (account == null)
+                {
+                    TempData["Mesaj"] = "Geçersiz Kullanıcı";
+                }
+                else
+                {
+                    //kullanıcıya verilen haklar Claims
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name, account.Adi),
+                        new Claim("Role", "Admin")
+                    };
+                    var userIdentity = new ClaimsIdentity(claims, "Login");
+                    //  hak prensipi yetkileri
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
+                    return Redirect("/Admin");
+                }
             }
             catch (Exception)
             {

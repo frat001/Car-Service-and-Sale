@@ -19,27 +19,27 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             _serviceArac = serviceArac;
         }
 
-        // GET: CustomersController
+        // GET
         public async Task<IActionResult> IndexAsync()
         {
             var model = await _service.GetAllAsync();
             return View(model);
         }
 
-        // GET: CustomersController/Details/5
+        // GET
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: CustomersController/Create
+        // GET
         public async Task<ActionResult> CreateAsync()
         {
             ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(), "Id", "Modeli");
             return View();
         }
 
-        // POST: CustomersController/Create
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(Musteri musteri)
@@ -61,7 +61,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(musteri);
         }
 
-        // GET: CustomersController/Edit/5
+        // GET
         public async Task<ActionResult> EditAsync(int id)
         {
             ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(), "Id", "Modeli");
@@ -69,7 +69,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(model);
         }
 
-        // POST: CustomersController/Edit/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, Musteri musteri)
@@ -91,14 +91,14 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(musteri);
         }
 
-        // GET: CustomersController/Delete/5
+        // GET
         public async Task<ActionResult> DeleteAsync(int id)
         {
             var model = await _service.FindAsync(id);
             return View(model);
         }
 
-        // POST: CustomersController/Delete/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Musteri musteri)

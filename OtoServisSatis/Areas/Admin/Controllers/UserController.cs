@@ -20,27 +20,27 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             _serviceRol = serviceRol;
         }
 
-        // GET: UserController
+        // GET
         public async Task<ActionResult> IndexAsync()
         {
             var model = await _service.GetAllAsync();
             return View(model);
         }
 
-        // GET: UserController/Details/5
+        // GET
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: UserController/Create
+        // GET
         public async Task<ActionResult> CreateAsync()
         {
             ViewBag.RolId = new SelectList(await _serviceRol.GetAllAsync(), "Id","Adi" );
             return View();
         }
 
-        // POST: UserController/Create
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(Kullanici kullanici)
@@ -62,7 +62,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(kullanici);
         }
 
-        // GET: UserController/Edit/5
+        // GET
         public async Task<ActionResult> EditAsync(int id)
         {
             var model = await _service.FindAsync(id);
@@ -70,7 +70,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(model);
         }
 
-        // POST: UserController/Edit/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, Kullanici kullanici)
@@ -92,14 +92,14 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(kullanici);
         }
 
-        // GET: UserController/Delete/5
+        // GET
         public async Task<ActionResult> DeleteAsync(int id)
         {
             var model = await _service.FindAsync(id);
             return View(model);
         }
 
-        // POST: UserController/Delete/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Kullanici kullanici)

@@ -16,26 +16,26 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             _service = service;
         }
 
-        // GET: ServicesController
+        // GET
         public async Task<ActionResult> IndexAsync()
         {
             var model = await _service.GetAllAsync();
             return View(model);
         }
 
-        // GET: ServicesController/Details/5
+        // GET
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ServicesController/Create
+        // GET
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ServicesController/Create
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(Servis servis)
@@ -56,14 +56,14 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(servis);
         }
 
-        // GET: ServicesController/Edit/5
+        // GET
         public async Task<ActionResult> EditAsync(int id)
         {
             var model = await _service.FindAsync(id);
             return View(model);
         }
 
-        // POST: ServicesController/Edit/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, Servis servis)
@@ -84,7 +84,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(servis);
         }
 
-        // GET: ServicesController/Delete/5
+        // GET
         public async Task<ActionResult> DeleteAsync(int id)
         {
 
@@ -92,7 +92,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             return View(model);
         }
 
-        // POST: ServicesController/Delete/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Servis servis)

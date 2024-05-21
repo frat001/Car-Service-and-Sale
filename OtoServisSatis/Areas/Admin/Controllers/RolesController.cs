@@ -16,26 +16,26 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             _service = service;
         }
 
-        // GET: RolesController
+        // GET
         public async Task<ActionResult> IndexAsync()
         {
             var model = await _service.GetAllAsync();
             return View(model);
         }
 
-        // GET: RolesController/Details/5
+        // GET
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: RolesController/Create
+        // GET
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: RolesController/Create
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Rol rol)
@@ -53,14 +53,14 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             }
         }
 
-        // GET: RolesController/Edit/5
+        // GET
         public async Task<ActionResult> EditAsync(int id)
         {
             var model = await _service.FindAsync(id);
             return View(model);
         }
 
-        // POST: RolesController/Edit/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Rol rol)
@@ -77,14 +77,14 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             }
         }
 
-        // GET: RolesController/Delete/5
+        // GET
         public async Task<ActionResult> DeleteAsync(int id)
         {
             var model = await _service.FindAsync(id);
             return View(model);
         }
 
-        // POST: RolesController/Delete/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Rol rol)
