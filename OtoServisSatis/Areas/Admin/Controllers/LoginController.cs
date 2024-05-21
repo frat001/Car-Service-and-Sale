@@ -4,44 +4,52 @@ using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
 using System.Security.Claims;
 
-namespace OtoServisSatis.Areas.Admin.Controllers
+namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class LoginController : Controller
     {
         private readonly IService<Kullanici> _service;
+        private readonly IService<Rol> _serviceRol;
 
-        public LoginController(IService<Kullanici> service)
+        public LoginController(IService<Kullanici> service, IService<Rol> serviceRol)
         {
             _service = service;
+            _serviceRol = serviceRol;
         }
 
-        //Get
         public IActionResult Index()
         {
             return View();
         }
-        //Post
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/Admin/Login");
+        }
         [HttpPost]
         public async Task<IActionResult> IndexAsync(string email, string password)
         {
             try
             {
-                var account = _service.Get(k => k.Email == email && k.Sifre == password && k.AktifMi == true);
+                var account = _service.Geet(k => k.Email == email && k.Sifre == password && k.AktifMi == true);
                 if (account == null)
                 {
-                    TempData["Mesaj"] = "Geçersiz Kullanıcı";
+                    TempData["Mesaj"] = "Giriş Başarsız!";
                 }
                 else
                 {
-                    //kullanıcıya verilen haklar Claims
+                    var rol = _serviceRol.Geet(r => r.Id == account.RolId);
                     var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.Name, account.Adi),
-                        new Claim("Role", "Admin")
+                        new Claim(ClaimTypes.Name, account.Adi)
                     };
+                    if (rol is not null)
+                    {
+                        //claims.Add(new Claim("Role", rol.Adi));
+                        claims.Add(new Claim(ClaimTypes.Role, rol.Adi));
+                    }
                     var userIdentity = new ClaimsIdentity(claims, "Login");
-                    //  hak prensipi yetkileri
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                     await HttpContext.SignInAsync(principal);
                     return Redirect("/Admin");
@@ -49,7 +57,6 @@ namespace OtoServisSatis.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-
                 TempData["Mesaj"] = "Hata Oluştu!";
             }
             return View();
