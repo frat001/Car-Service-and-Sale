@@ -39,6 +39,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
                 }
                 else
                 {
+                    // Claim = kullanıcı hakkında key – value şeklinde hususi bilgiler tutan ve bunları bizlere yaptığımız talepler neticesinde getiren bir yapı.    
                     var rol = _serviceRol.Geet(r => r.Id == account.RolId);
                     var claims = new List<Claim>()
                     {
@@ -46,7 +47,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
                     };
                     if (rol is not null)
                     {
-                        //claims.Add(new Claim("Role", rol.Adi));
+                        
                         claims.Add(new Claim(ClaimTypes.Role, rol.Adi));
                     }
                     var userIdentity = new ClaimsIdentity(claims, "Login");

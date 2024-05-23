@@ -1,24 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OtoServisSatis.Data.Migrations;
+using OtoServisSatis.Entities;
 using OtoServisSatis.Models;
+using OtoServisSatis.Service.Abstract;
 using System.Diagnostics;
+using Slider = OtoServisSatis.Entities.Slider;
 
 namespace OtoServisSatis.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IService<Slider> _service;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IService<Slider> service)
         {
-            _logger = logger;
+            _service = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var model = await _service.GetAllAsync();
+            return View(model);
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        [Route("AccessDenied")]
+        public IActionResult AccessDenied()
         {
             return View();
         }
