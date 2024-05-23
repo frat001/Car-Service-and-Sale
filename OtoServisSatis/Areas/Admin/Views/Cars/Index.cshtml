@@ -30,12 +30,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.SatistaMi)
             </th>
-            
+            <th>
+                @Html.DisplayNameFor(model => model.Anasayfa)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Resim1)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Marka)
+                @Html.DisplayNameFor(model => model.Marka.Adi)
             </th>
             <th></th>
         </tr>
@@ -62,7 +64,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.SatistaMi)
                 </td>
-                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Anasayfa)
+                </td>
                 <td>
                     <img src="/Img/Cars/@item.Resim1" height="34" />
                 </td>

@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>();
 
 //Service Katmanýný kullanabiliyoruz
 builder.Services.AddTransient(typeof(IService<>), typeof(Service<>));
+builder.Services.AddTransient<ICarService, CarService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
 {

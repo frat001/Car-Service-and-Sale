@@ -32,6 +32,9 @@ namespace OtoServisSatis.Entities
 
         [Display(Name = "Satışta Mı")]
         public bool SatistaMi { get; set; }
+        
+        [Display(Name = "Anasayfa")]
+        public bool Anasayfa { get; set; }
 
         [Required(ErrorMessage = "{0} Alan Zorunludur")]
         public string Notlar { get; set; }

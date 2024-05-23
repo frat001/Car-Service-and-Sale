@@ -11,17 +11,25 @@ namespace OtoServisSatis.Controllers
     public class HomeController : Controller
     {
         private readonly IService<Slider> _service;
+        private readonly ICarService _serviceArac;
 
-        public HomeController(IService<Slider> service)
+        public HomeController(IService<Slider> service, ICarService serviceArac)
         {
             _service = service;
+            _serviceArac = serviceArac;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            var model = await _service.GetAllAsync();
+            var model = new HomePageViewModel()
+            {
+
+                Sliders = await _service.GetAllAsync(),
+                Araclar = await _serviceArac.GetCustomCarList(a => a.Anasayfa)
+            };
             return View(model);
         }
+
 
         public IActionResult Privacy()
         {
