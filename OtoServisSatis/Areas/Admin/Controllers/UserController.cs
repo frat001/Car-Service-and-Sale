@@ -7,7 +7,8 @@ using OtoServisSatis.Service.Abstract;
 
 namespace OtoServisSatis.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize(Policy = "AdminPolicy")]
+
 
     public class UserController : Controller
     {

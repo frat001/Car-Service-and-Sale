@@ -8,7 +8,8 @@ using OtoServisSatis.Utils;
 
 namespace OtoServisSatis.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize(Policy = "UserPolicy")]
+    [Area("Admin"), Authorize(Policy = "AdminPolicy")]
+
     public class CarsController : Controller
     {
         private readonly ICarService _service;

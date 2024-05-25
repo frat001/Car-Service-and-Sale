@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
+using System.Security.Claims;
 
 namespace OtoServisSatis.Controllers
 {
@@ -15,6 +18,7 @@ namespace OtoServisSatis.Controllers
             _serviceRol = serviceRol;
         }
 
+        [ Authorize(Policy = "CustomerPolicy")]
         public IActionResult Index()
         {
             return View();
@@ -54,9 +58,54 @@ namespace OtoServisSatis.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login( string email, string password)
+        public async Task<IActionResult> LoginAsync( Kullanici cutomerViewModel)
         {
+            try
+            {
+                var account = await _service.GetAsync(k => k.Email == cutomerViewModel.Email && k.Sifre == cutomerViewModel.Sifre && k.AktifMi == true);
+                if (account == null)
+                {
+                    
+                    ModelState.AddModelError("", "Giriş Başarsız!");
+                }
+                else
+                {
+                    // Claim = kullanıcı hakkında key – value şeklinde hususi bilgiler tutan ve bunları bizlere yaptığımız talepler neticesinde getiren bir yapı.    
+                    var rol = _serviceRol.Geet(r => r.Id == account.RolId);
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name, account.Adi)
+                    };
+                    if (rol is not null)
+                    {
+
+                        claims.Add(new Claim(ClaimTypes.Role, rol.Adi));
+                    }
+                    var userIdentity = new ClaimsIdentity(claims, "Login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
+                    if (rol.Adi == "Admin")
+                    {
+                        return Redirect("/Admin");
+
+                    }
+                    return Redirect("/Account");
+                }
+            }
+            catch (Exception)
+            {
+                
+                ModelState.AddModelError("", "Hata Oluştu!");
+
+            }
             return View();
+            
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
         }
     }
 }

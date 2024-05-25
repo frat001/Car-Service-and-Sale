@@ -37,5 +37,8 @@ namespace OtoServisSatis.Entities
         public int RolId { get; set; }
 
         public virtual Rol? Rol { get; set; }
+
+        //Otomatik Guid oluşturucu
+        public Guid? UserGuid { get; set; } = Guid.NewGuid();
     }
 }

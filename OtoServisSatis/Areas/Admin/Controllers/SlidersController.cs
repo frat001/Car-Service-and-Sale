@@ -7,7 +7,8 @@ using OtoServisSatis.Utils;
 
 namespace OtoServisSatis.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(Policy = "AdminPolicy")]
+
 
     public class SlidersController : Controller
     {

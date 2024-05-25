@@ -34,8 +34,17 @@
                     <input name="q" type="search" class="form-control form-control-dark text-bg-dark" placeholder="Ara..." aria-label="Search">
                 </form>
                 <div class="text-end">
-                    <a asp-controller="Account" asp-action="Login" style="background-color:#ecccb2;">Giriş</a>
-                    <a asp-controller="Account" asp-action="Register" class="btn btn-warning fw-bold text-black">Kayıt Ol</a>
+                    @if (Context.User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Account" asp-action="Index" style="background-color:#ecccb2;">Hesabım</a>
+                        <a asp-controller="Account" asp-action="Logout" class="btn btn-warning fw-bold text-black">Oturum Kapat</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" style="background-color:#ecccb2;">Giriş</a>
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-warning fw-bold text-black">Kayıt Ol</a>
+                    }
+                    
                 </div>
             </div>
         </nav>

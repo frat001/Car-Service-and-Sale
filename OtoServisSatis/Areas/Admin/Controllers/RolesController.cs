@@ -6,7 +6,8 @@ using OtoServisSatis.Service.Abstract;
 
 namespace OtoServisSatis.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(Policy = "AdminPolicy")]
+
     public class RolesController : Controller
     {
         private readonly IService<Rol> _service;

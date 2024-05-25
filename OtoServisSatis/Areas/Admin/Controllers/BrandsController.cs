@@ -6,7 +6,7 @@ using OtoServisSatis.Service.Abstract;
 
 namespace OtoServisSatis.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(Policy ="AdminPolicy")]
     public class BrandsController : Controller
     {
         private readonly IService<Marka> _service;
