@@ -12,10 +12,10 @@ namespace OtoServisSatis.Areas.Admin.Controllers
 
     public class UserController : Controller
     {
-        private readonly IService<Kullanici> _service;
+        private readonly IUserService _service;
         private readonly IService<Rol> _serviceRol;
 
-        public UserController(IService<Kullanici> service, IService<Rol> serviceRol)
+        public UserController(IUserService service, IService<Rol> serviceRol)
         {
             _service = service;
             _serviceRol = serviceRol;
@@ -24,7 +24,7 @@ namespace OtoServisSatis.Areas.Admin.Controllers
         // GET
         public async Task<ActionResult> IndexAsync()
         {
-            var model = await _service.GetAllAsync();
+            var model = await _service.GetCustomerList();
             return View(model);
         }
 

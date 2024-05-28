@@ -9,23 +9,68 @@ namespace OtoServisSatis.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IService<Kullanici> _service;
+        private readonly IUserService _service;
         private readonly IService<Rol> _serviceRol;
 
-        public AccountController(IService<Kullanici> service, IService<Rol> serviceRol)
+        public AccountController(IUserService service, IService<Rol> serviceRol)
         {
             _service = service;
             _serviceRol = serviceRol;
         }
 
-        [ Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = "CustomerPolicy")]
         public IActionResult Index()
         {
-            return View();
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var guid = User.FindFirst(ClaimTypes.UserData)?.Value;
+            if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(guid))
+            {
+                var user = _service.Geet(k => k.Email == email && k.UserGuid.ToString() == guid);
+                if (user != null)
+                {
+                    return View(user);
+                }
+
+            }
+            return NotFound();
         }
         public IActionResult Register()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult UserUpdate(Kullanici kullanici)
+        {
+            try
+            {
+                var email = User.FindFirst(ClaimTypes.Email)?.Value;
+                var guid = User.FindFirst(ClaimTypes.UserData)?.Value;
+                if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(guid))
+                {
+                    var user = _service.Geet(k => k.Email == email && k.UserGuid.ToString() == guid);
+                    if (user != null)
+                    {
+                        user.Adi = kullanici.Adi;
+                        user.Soyadi = kullanici.Soyadi;
+                        user.AktifMi = kullanici.AktifMi;
+                        user.Email = kullanici.Email;
+                        user.UserGuid = kullanici.UserGuid;
+                        user.Sifre = kullanici.Sifre;
+                        user.EklenmeTarihi = kullanici.EklenmeTarihi;
+                        user.Telefon = kullanici.Telefon;
+                        _service.Update(user);
+                        _service.Save();
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError("", "Hata Oluştu");
+            }
+
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult> RegisterAsync(Kullanici kullanici)
@@ -58,14 +103,14 @@ namespace OtoServisSatis.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> LoginAsync( Kullanici cutomerViewModel)
+        public async Task<IActionResult> LoginAsync(Kullanici cutomerViewModel)
         {
             try
             {
                 var account = await _service.GetAsync(k => k.Email == cutomerViewModel.Email && k.Sifre == cutomerViewModel.Sifre && k.AktifMi == true);
                 if (account == null)
                 {
-                    
+
                     ModelState.AddModelError("", "Giriş Başarsız!");
                 }
                 else
@@ -74,7 +119,9 @@ namespace OtoServisSatis.Controllers
                     var rol = _serviceRol.Geet(r => r.Id == account.RolId);
                     var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.Name, account.Adi)
+                        new Claim(ClaimTypes.Name, account.Adi),
+                        new Claim(ClaimTypes.Email, account.Email),
+                        new Claim(ClaimTypes.UserData, account.UserGuid.ToString())
                     };
                     if (rol is not null)
                     {
@@ -94,12 +141,12 @@ namespace OtoServisSatis.Controllers
             }
             catch (Exception)
             {
-                
+
                 ModelState.AddModelError("", "Hata Oluştu!");
 
             }
             return View();
-            
+
         }
 
         public async Task<IActionResult> Logout()
