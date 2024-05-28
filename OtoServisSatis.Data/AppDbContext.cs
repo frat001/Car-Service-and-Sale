@@ -21,6 +21,7 @@ namespace OtoServisSatis.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localDb)\MSSQLLocalDb; Database=OtoServisSatis; Trusted_Connection=true;MultipleActiveResultSets=True;");
+            optionsBuilder.UseLazyLoadingProxies();
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
