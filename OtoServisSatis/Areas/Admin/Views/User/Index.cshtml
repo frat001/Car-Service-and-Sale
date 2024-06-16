@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a class="btn btn-outline-primary" asp-action="Create">Yeni Ekle</a>
+    <a class="btn btn-outline-primary" asp-action="Create"><i class="fa-solid fa-person-circle-plus"></i></a>
 </p>
 <table class="table">
     <thead>
@@ -74,8 +74,8 @@
                     @Html.DisplayFor(modelItem => item.Rol.Adi)
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a> |
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-person-circle-question"></i></a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-person-circle-minus"></i></a>
                 </td>
             </tr>
         }
